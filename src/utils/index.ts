@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import {} from "../views/ProjectList/type";
 
-export const isFalsy = (value: any) => (value === 0 ? false : !value);
+export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
 
 export const cleanObject = (object: object) => {
   const result = { ...object };
@@ -23,10 +23,7 @@ export const useMount = (callback: Function) => {
   }, []);
 };
 
-export const useDebounce = (
-  value: { name: string; personId: string },
-  delay = 2000
-) => {
+export const useDebounce = <T>(value: T, delay: number): T => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
