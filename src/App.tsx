@@ -1,13 +1,14 @@
 import React from "react";
+import { useAuth } from "./context/authContext";
+import AuthenticatedApp from "AuthenticatedApp";
+import UnauthenticatedApp from "UnauthenticatedApp";
 import "./App.css";
-// import ProjectList from "views/ProjectList";
-import Login from "views/Login";
 
 function App() {
+  const { user } = useAuth();
   return (
     <div className="App">
-      <Login />
-      {/* <ProjectList /> */}
+      {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
     </div>
   );
 }
