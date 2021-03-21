@@ -1,4 +1,5 @@
 import React from "react";
+import { Input, Select } from "antd";
 import { SearchPanelProps } from "./type";
 
 export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
@@ -11,26 +12,24 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
     });
   };
 
-  const handleSelect: (event: React.ChangeEvent<HTMLSelectElement>) => void = (
-    event
-  ) => {
+  const handleSelect: (value: string) => void = (value) => {
     setParam({
       ...param,
-      personId: event.target.value,
+      personId: value,
     });
   };
 
   return (
     <>
-      <input value={param.name} onChange={handleInput} />
-      <select value={param.personId} onChange={handleSelect}>
-        <option value="">负责人</option>
+      <Input value={param.name} onChange={handleInput} />
+      <Select value={param.personId} onChange={handleSelect}>
+        <Select.Option value="">负责人</Select.Option>
         {users.map((user) => (
-          <option value={user.id} key={user.id}>
+          <Select.Option value={user.id} key={user.id}>
             {user.name}
-          </option>
+          </Select.Option>
         ))}
-      </select>
+      </Select>
     </>
   );
 };

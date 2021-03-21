@@ -1,25 +1,28 @@
 import React from "react";
+import { Table } from "antd";
 import { ListProps } from "./type";
 
 export const List = ({ list, users }: ListProps) => {
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>名称</th>
-          <th>负责人</th>
-        </tr>
-      </thead>
-      <tbody>
-        {list.map((project) => (
-          <tr key={project.name}>
-            <td>{project.name}</td>
-            <td>
+    <Table
+      dataSource={list}
+      columns={[
+        {
+          title: "名称",
+          dataIndex: "name",
+          // sorter: (a, b) => a.name.localeCompare(b.name)
+        },
+        {
+          title: "负责人",
+          render: (value, project) => (
+            <span>
               {users.find((u) => u.id === project.personId)?.name || "未知"}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+            </span>
+          ),
+        },
+      ]}
+      rowKey="name"
+      pagination={false}
+    />
   );
 };

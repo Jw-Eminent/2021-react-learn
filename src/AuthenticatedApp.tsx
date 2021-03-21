@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "antd";
 import ProjectList from "views/ProjectList";
 import { useAuth } from "context/authContext";
 
@@ -6,7 +7,7 @@ export default function AuthenticatedApp() {
   const { logout } = useAuth();
   return (
     <div>
-      <button onClick={logout}>退出登录</button>
+      <Button onClick={logout}>退出登录</Button>
       <ProjectList />
     </div>
   );
