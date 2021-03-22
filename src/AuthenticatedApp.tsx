@@ -52,8 +52,6 @@ const Header = styled(Row)`
 
 const HeaderLeft = styled(Row)``;
 
-const HeaderListItem = styled.h3``;
-
 const HeaderRight = styled.div``;
 
 const Main = styled.main``;
