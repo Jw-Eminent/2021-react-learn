@@ -1,21 +1,34 @@
-import { Button } from "antd";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import { Dropdown, Menu } from "antd";
 import styled from "@emotion/styled";
 import ProjectList from "views/ProjectList";
 import { useAuth } from "context/authContext";
 import { Row } from "./components/lib";
+import { ReactComponent as Logo } from "./assets/software-logo.svg";
 
 export default function AuthenticatedApp() {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   return (
     <Container>
       <Header between>
         <HeaderLeft gap>
-          <h3>Logo</h3>
+          <Logo width="18rem" color="rgb(38, 132, 255)" />
           <h3>项目</h3>
           <h3>用户</h3>
         </HeaderLeft>
         <HeaderRight>
-          <Button onClick={logout}>退出登录</Button>
+          <Dropdown
+            trigger={["click"]}
+            overlay={
+              <Menu>
+                <Menu.Item key="logout">
+                  <a onClick={logout}>登出</a>
+                </Menu.Item>
+              </Menu>
+            }
+          >
+            <a onClick={(e) => e.preventDefault()}>Hi, {user?.name}</a>
+          </Dropdown>
         </HeaderRight>
       </Header>
       <Main>
@@ -31,7 +44,11 @@ const Container = styled.div`
   height: 100vh;
 `;
 
-const Header = styled(Row)``;
+const Header = styled(Row)`
+  padding: 3.2rem;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+  z-index: 1;
+`;
 
 const HeaderLeft = styled(Row)``;
 

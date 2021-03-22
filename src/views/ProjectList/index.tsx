@@ -4,6 +4,7 @@ import { SearchPanel } from "./SearchPanel";
 import { cleanObject, useDebounce, useMount } from "utils";
 import { User, Project } from "./type";
 import { useHttp } from "utils/http";
+import styled from "@emotion/styled";
 
 const ProjectList = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -25,11 +26,16 @@ const ProjectList = () => {
   });
 
   return (
-    <div>
+    <Coptainer>
+      <h1>项目列表</h1>
       <SearchPanel users={users} param={param} setParam={setParam} />
       <List list={list} users={users} />
-    </div>
+    </Coptainer>
   );
 };
 
 export default ProjectList;
+
+const Coptainer = styled.div`
+  padding: 3.2rem;
+`;
