@@ -1,5 +1,4 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from "react";
+import { useState } from "react";
 import { Card, Divider, Button } from "antd";
 import Login from "./Login";
 import Register from "./Register";
@@ -12,6 +11,7 @@ export default function UnauthenticatedApp() {
   const [isRegister, setIsRegister] = useState(false);
   return (
     <Container>
+      <Backgroud />
       <Header />
       <ShadowCard>
         <Title>{isRegister ? "请注册" : "请登录"}</Title>
@@ -21,7 +21,6 @@ export default function UnauthenticatedApp() {
           {isRegister ? "已经有账号了？直接登录" : "没有账号？注册新账号"}
         </Button>
       </ShadowCard>
-      <Backgroud />
     </Container>
   );
 }
