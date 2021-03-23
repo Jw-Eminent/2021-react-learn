@@ -44,8 +44,8 @@ export const http = async (
   });
 };
 
-export const useHttp = () => {
+export default function useHttp() {
   const { user } = useAuth();
   return (...[endpoint, config]: Parameters<typeof http>) =>
     http(endpoint, { ...config, token: user?.token });
-};
+}

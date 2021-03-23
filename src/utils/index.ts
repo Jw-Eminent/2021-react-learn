@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import {} from "../views/ProjectList/type";
+import useAsync from "./useAsync";
+import useHttp from "./http";
 
-export const isVoid = (value: unknown) =>
+const isVoid = (value: unknown) =>
   value === undefined || value === null || value === "";
 
-export const cleanObject = (object: { [key: string]: unknown }) => {
+const cleanObject = (object: { [key: string]: unknown }) => {
   const result = { ...object };
   Object.keys(result).forEach((key) => {
     const value = result[key];
@@ -15,14 +16,14 @@ export const cleanObject = (object: { [key: string]: unknown }) => {
   return result;
 };
 
-export const useMount = (callback: Function) => {
+const useMount = (callback: Function) => {
   useEffect(() => {
     callback();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
 
-export const useDebounce = <T>(value: T, delay: number): T => {
+const useDebounce = <T>(value: T, delay: number): T => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ export const useDebounce = <T>(value: T, delay: number): T => {
   return debouncedValue;
 };
 
-export const useArray = <T>(initialValue: T[]) => {
+const useArray = <T>(initialValue: T[]) => {
   const [value, setValue] = useState(initialValue);
 
   const clear = () => {
@@ -57,3 +58,5 @@ export const useArray = <T>(initialValue: T[]) => {
     clear,
   };
 };
+
+export { useHttp, useAsync, cleanObject, useMount, useDebounce, useArray };

@@ -1,12 +1,16 @@
 import React from "react";
-import { Table } from "antd";
+import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
-import { ListProps } from "./type";
+import { Project, User } from "./type";
 
-export const List = ({ list, users }: ListProps) => {
+interface ListProps extends TableProps<Project> {
+  users: User[];
+}
+
+export const List = ({ users, ...props }: ListProps) => {
   return (
     <Table
-      dataSource={list}
+      {...props}
       columns={[
         {
           title: "名称",

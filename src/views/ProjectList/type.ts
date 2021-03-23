@@ -24,8 +24,3 @@ export interface SearchPanelProps {
   };
   setParam: (param: SearchPanelProps["param"]) => void;
 }
-
-export interface ListProps {
-  list: Project[];
-  users: User[];
-}
