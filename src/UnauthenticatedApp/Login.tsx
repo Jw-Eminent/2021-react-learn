@@ -1,12 +1,21 @@
 import React from "react";
 import { Form, Input, Button } from "antd";
 import { useAuth } from "context/authContext";
+import { useAsync } from "utils";
 
-const Login = () => {
+const Login = ({ onError }: { onError: (error: Error) => void }) => {
   const { login } = useAuth();
+  const { run, isLoading } = useAsync(undefined, { throwError: true });
 
-  const handleSubmit = (values: { username: string; password: string }) => {
-    login(values);
+  const handleSubmit = async (values: {
+    username: string;
+    password: string;
+  }) => {
+    try {
+      await run(login(values));
+    } catch (err) {
+      onError(err);
+    }
   };
 
   return (
@@ -24,7 +33,7 @@ const Login = () => {
         <Input type="password" placeholder="密码" />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit" block>
+        <Button loading={isLoading} type="primary" htmlType="submit" block>
           登录
         </Button>
       </Form.Item>
