@@ -1,5 +1,9 @@
-import React, { useState, useContext, ReactNode } from "react";
+import React, { useContext, ReactNode } from "react";
+import { Spin, Typography } from "antd";
+import styled from "@emotion/styled";
+import { DevTools } from "jira-dev-tool";
 import { useMount } from "utils";
+import { useAsync } from "utils";
 import { http } from "utils/http";
 import { User } from "views/ProjectList/type";
 import * as auth from "../authProvider";
@@ -20,26 +24,53 @@ const AuthContext = React.createContext<ContextType | undefined>(undefined);
 
 AuthContext.displayName = "AuthContext";
 
-const initUser = async () => {
-  let user = null;
-  const token = auth.getToken();
-  if (token) {
-    const data = await http("/me", { token });
-    user = data.user;
-  }
-  return user;
-};
-
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const {
+    run,
+    isIdle,
+    isLoading,
+    isError,
+    setData: setUser,
+    data: user,
+    error,
+  } = useAsync<User | null>();
 
   const login = (form: AutchForm) => auth.login(form).then(setUser);
   const register = (form: AutchForm) => auth.register(form).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));
 
+  const initUser = async () => {
+    let user = null;
+    const token = auth.getToken();
+    if (token) {
+      const data = await http("/me", { token });
+      user = data.user;
+    }
+    return user;
+  };
+
   useMount(() => {
-    initUser().then(setUser);
+    run(initUser());
   });
+
+  if (isIdle || isLoading) {
+    return (
+      <FullScreenStatus>
+        <Spin spinning size="large" tip="加载中..." />
+      </FullScreenStatus>
+    );
+  }
+
+  if (isError) {
+    return (
+      <FullScreenStatus>
+        <DevTools />
+        <Typography.Text type="danger">
+          {error?.message || "出错啦..."}
+        </Typography.Text>
+      </FullScreenStatus>
+    );
+  }
 
   return (
     <AuthContext.Provider
@@ -56,3 +87,10 @@ export const useAuth = () => {
   }
   return context;
 };
+
+const FullScreenStatus = styled.div`
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
