@@ -1,12 +1,10 @@
 import React, { useContext, ReactNode } from "react";
-import { Spin, Typography } from "antd";
-import styled from "@emotion/styled";
-import { DevTools } from "jira-dev-tool";
 import { useMount } from "utils";
 import { useAsync } from "utils";
 import { http } from "utils/http";
 import { User } from "views/ProjectList/type";
 import * as auth from "../authProvider";
+import { FullPageErrorFallback, FullPageLoading } from "components/lib";
 
 interface AutchForm {
   username: string;
@@ -54,22 +52,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   });
 
   if (isIdle || isLoading) {
-    return (
-      <FullScreenStatus>
-        <Spin spinning size="large" tip="加载中..." />
-      </FullScreenStatus>
-    );
+    return <FullPageLoading tip="加载中..." />;
   }
 
   if (isError) {
-    return (
-      <FullScreenStatus>
-        <DevTools />
-        <Typography.Text type="danger">
-          {error?.message || "出错啦..."}
-        </Typography.Text>
-      </FullScreenStatus>
-    );
+    return <FullPageErrorFallback error={error} />;
   }
 
   return (
@@ -87,10 +74,3 @@ export const useAuth = () => {
   }
   return context;
 };
-
-const FullScreenStatus = styled.div`
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;

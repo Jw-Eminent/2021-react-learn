@@ -12,8 +12,12 @@ const defaultInitialState: State<null> = {
   error: null,
 };
 
-const defaultConfig = {
+const defaultConfig: {
+  throwError?: boolean;
+  needUpdateData?: boolean;
+} = {
   throwError: false,
+  needUpdateData: true,
 };
 
 const useAsync = <T>(
@@ -52,7 +56,9 @@ const useAsync = <T>(
     setState({ ...state, stat: "loading" });
     return promise
       .then((res) => {
-        setData(res);
+        if (config.needUpdateData) {
+          setData(res);
+        }
         return res;
       })
       .catch((error) => {

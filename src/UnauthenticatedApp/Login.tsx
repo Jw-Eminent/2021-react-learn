@@ -5,7 +5,10 @@ import { useAsync } from "utils";
 
 const Login = ({ onError }: { onError: (error: Error) => void }) => {
   const { login } = useAuth();
-  const { run, isLoading } = useAsync(undefined, { throwError: true });
+  const { run, isLoading } = useAsync(undefined, {
+    throwError: true,
+    needUpdateData: false,
+  });
 
   const handleSubmit = async (values: {
     username: string;
