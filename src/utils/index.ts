@@ -59,4 +59,29 @@ const useArray = <T>(initialValue: T[]) => {
   };
 };
 
-export { useHttp, useAsync, cleanObject, useMount, useDebounce, useArray };
+const useDocumentTitle = (title: string, keepUnmount: boolean = true) => {
+  const oldTitle = document.title;
+
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
+
+  useEffect(() => {
+    return () => {
+      if (!keepUnmount) {
+        document.title = oldTitle;
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+};
+
+export {
+  useHttp,
+  useAsync,
+  cleanObject,
+  useMount,
+  useDebounce,
+  useArray,
+  useDocumentTitle,
+};
