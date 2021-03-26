@@ -75,6 +75,8 @@ const useDocumentTitle = (title: string, keepUnmount: boolean = true) => {
   }, [keepUnmount, oldTitle]);
 };
 
+const resetRoute = () => (window.location.href = window.location.origin);
+
 export {
   useHttp,
   useAsync,
@@ -83,4 +85,5 @@ export {
   useDebounce,
   useArray,
   useDocumentTitle,
+  resetRoute,
 };
