@@ -1,5 +1,5 @@
 export interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
   title: string;
@@ -8,9 +8,9 @@ export interface User {
 }
 
 export interface Project {
-  id: string;
+  id: number;
   name: string;
-  personId: string;
+  personId: number | string;
   pin: boolean;
   organization: string;
   created: number;
@@ -20,7 +20,7 @@ export interface SearchPanelProps {
   users: User[];
   param: {
     name: string;
-    personId: string;
+    personId: number | string;
   };
   setParam: (param: SearchPanelProps["param"]) => void;
 }

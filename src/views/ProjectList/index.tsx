@@ -6,7 +6,10 @@ import { useProjects, useUsers } from "./hooks";
 import styled from "@emotion/styled";
 
 const ProjectList = () => {
-  const [param, setParam] = useState<{ name: string; personId: string }>({
+  const [param, setParam] = useState<{
+    name: string;
+    personId: number | string;
+  }>({
     name: "",
     personId: "",
   });

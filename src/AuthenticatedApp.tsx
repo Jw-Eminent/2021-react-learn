@@ -1,42 +1,56 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Dropdown, Menu } from "antd";
+import { Navigate, Routes, Route } from "react-router";
+import { BrowserRouter as Router } from "react-router-dom";
 import styled from "@emotion/styled";
 import ProjectList from "views/ProjectList";
+import Project from "views/Project";
 import { useAuth } from "context/authContext";
 import { Row } from "./components/lib";
 import { ReactComponent as Logo } from "./assets/software-logo.svg";
 
 export default function AuthenticatedApp() {
-  const { logout, user } = useAuth();
   return (
     <Container>
-      <Header between>
-        <HeaderLeft gap>
-          <Logo width="18rem" color="rgb(38, 132, 255)" />
-          <h3>项目</h3>
-          <h3>用户</h3>
-        </HeaderLeft>
-        <HeaderRight>
-          <Dropdown
-            trigger={["click"]}
-            overlay={
-              <Menu>
-                <Menu.Item key="logout">
-                  <a onClick={logout}>登出</a>
-                </Menu.Item>
-              </Menu>
-            }
-          >
-            <a onClick={(e) => e.preventDefault()}>Hi, {user?.name}</a>
-          </Dropdown>
-        </HeaderRight>
-      </Header>
+      <PageHeader />
       <Main>
-        <ProjectList />
+        <Router>
+          <Routes>
+            <Route path="/projects" element={<ProjectList />} />
+            <Route path="/projects/:projectId/*" element={<Project />} />
+          </Routes>
+        </Router>
       </Main>
     </Container>
   );
 }
+
+const PageHeader = () => {
+  const { logout, user } = useAuth();
+  return (
+    <Header between>
+      <HeaderLeft gap>
+        <Logo width="18rem" color="rgb(38, 132, 255)" />
+        <h3>项目</h3>
+        <h3>用户</h3>
+      </HeaderLeft>
+      <HeaderRight>
+        <Dropdown
+          trigger={["click"]}
+          overlay={
+            <Menu>
+              <Menu.Item key="logout">
+                <a onClick={logout}>登出</a>
+              </Menu.Item>
+            </Menu>
+          }
+        >
+          <a onClick={(e) => e.preventDefault()}>Hi, {user?.name}</a>
+        </Dropdown>
+      </HeaderRight>
+    </Header>
+  );
+};
 
 const Container = styled.div`
   display: grid;

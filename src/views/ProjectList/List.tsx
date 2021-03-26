@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
 import { Project, User } from "./type";
@@ -16,6 +17,9 @@ export const List = ({ users, ...props }: ListProps) => {
           title: "名称",
           dataIndex: "name",
           sorter: (a, b) => a.name.localeCompare(b.name),
+          render: (name, project) => (
+            <Link to={String(project.id)}>{name}</Link>
+          ),
         },
         {
           title: "部门",
