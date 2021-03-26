@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import useAsync from "./useAsync";
 import useHttp from "./http";
 
@@ -60,7 +60,7 @@ const useArray = <T>(initialValue: T[]) => {
 };
 
 const useDocumentTitle = (title: string, keepUnmount: boolean = true) => {
-  const oldTitle = document.title;
+  const oldTitle = useRef(document.title).current;
 
   useEffect(() => {
     document.title = title;
@@ -72,8 +72,7 @@ const useDocumentTitle = (title: string, keepUnmount: boolean = true) => {
         document.title = oldTitle;
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [keepUnmount, oldTitle]);
 };
 
 export {
