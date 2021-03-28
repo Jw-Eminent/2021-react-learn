@@ -4,21 +4,25 @@ import { SearchPanel } from "./SearchPanel";
 import { useDebounce, useDocumentTitle } from "utils";
 import { useProjectSearchParams } from "./hooks";
 import styled from "@emotion/styled";
-import useProjects from "utils/useProjects";
+import { useProjects } from "utils/projects";
 import useUsers from "utils/useUsers";
 
 const ProjectList = () => {
   useDocumentTitle("项目列表", false);
 
   const [param, setParam] = useProjectSearchParams();
-  const { isLoading, data: list } = useProjects(useDebounce(param, 500));
+  const { isLoading, data: list, retry } = useProjects(useDebounce(param, 500));
   const { data: users } = useUsers();
-
   return (
     <Coptainer>
       <h1>项目列表</h1>
       <SearchPanel users={users || []} param={param} setParam={setParam} />
-      <List dataSource={list || []} users={users || []} loading={isLoading} />
+      <List
+        dataSource={list || []}
+        users={users || []}
+        loading={isLoading}
+        refresh={retry}
+      />
     </Coptainer>
   );
 };
