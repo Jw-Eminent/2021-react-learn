@@ -1,27 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
-import { cleanObject } from "utils";
-import { useAsync, useHttp } from "utils";
-import { Project, User } from "../../types/projectList";
+import { useMemo } from "react";
+import useQueryParam from "utils/url";
 
-export const useProjects = (param?: Partial<Project>) => {
-  const { run, ...result } = useAsync<Project[]>();
-  const request = useHttp();
-
-  useEffect(() => {
-    run(request("/projects", { data: cleanObject(param || {}) }));
-  }, [param]);
-
-  return result;
-};
-
-export const useUsers = (param?: Partial<User>) => {
-  const request = useHttp();
-  const { run, ...result } = useAsync<User[]>();
-
-  useEffect(() => {
-    run(request("/users"));
-  }, [param]);
-
-  return result;
+export const useProjectSearchParams = () => {
+  const [param, setParam] = useQueryParam(["name", "personId"]);
+  return [
+    useMemo(
+      () => ({ ...param, personId: Number(param.personId) || undefined }),
+      [param]
+    ),
+    setParam,
+  ] as const;
 };

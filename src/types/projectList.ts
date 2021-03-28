@@ -1,5 +1,5 @@
 export interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
   title: string;
@@ -8,9 +8,9 @@ export interface User {
 }
 
 export interface Project {
-  id: string;
+  id: number;
   name: string;
-  personId: string;
+  personId: number;
   pin: boolean;
   organization: string;
   created: number;
@@ -18,9 +18,6 @@ export interface Project {
 
 export interface SearchPanelProps {
   users: User[];
-  param: {
-    name: string;
-    personId: string;
-  };
+  param: Partial<Pick<Project, "name" | "personId">>;
   setParam: (param: SearchPanelProps["param"]) => void;
 }

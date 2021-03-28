@@ -2,17 +2,17 @@ import React from "react";
 import { List } from "./List";
 import { SearchPanel } from "./SearchPanel";
 import { useDebounce, useDocumentTitle } from "utils";
-import { useProjects, useUsers } from "./hooks";
+import { useProjectSearchParams } from "./hooks";
 import styled from "@emotion/styled";
-import useQueryParam from "utils/url";
+import useProjects from "utils/useProjects";
+import useUsers from "utils/useUsers";
 
 const ProjectList = () => {
-  const [param, setParam] = useQueryParam(["name", "personId"]);
-  const debouncedParam = useDebounce(param, 500);
-  const { isLoading, data: list } = useProjects(debouncedParam);
-  const { data: users } = useUsers();
-
   useDocumentTitle("项目列表", false);
+
+  const [param, setParam] = useProjectSearchParams();
+  const { isLoading, data: list } = useProjects(useDebounce(param, 500));
+  const { data: users } = useUsers();
 
   return (
     <Coptainer>

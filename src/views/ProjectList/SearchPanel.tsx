@@ -1,6 +1,7 @@
 /* @jsxImportSource @emotion/react */
 import React from "react";
-import { Input, Select, Form } from "antd";
+import { Input, Form } from "antd";
+import IdSelector from "../../components/IdSelector";
 import { SearchPanelProps } from "../../types/projectList";
 
 export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
@@ -13,10 +14,10 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
     });
   };
 
-  const handleSelect: (value: string) => void = (value) => {
+  const handleSelect: (value?: number) => void = (value) => {
     setParam({
       ...param,
-      personId: value,
+      personId: value || 0,
     });
   };
 
@@ -26,14 +27,12 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
         <Input value={param.name} onChange={handleInput} placeholder="项目名" />
       </Form.Item>
       <Form.Item>
-        <Select value={String(param.personId)} onChange={handleSelect}>
-          <Select.Option value="">负责人</Select.Option>
-          {users.map((user) => (
-            <Select.Option value={String(user.id)} key={user.id}>
-              {user.name}
-            </Select.Option>
-          ))}
-        </Select>
+        <IdSelector
+          value={param.personId}
+          defaultOptionName="负责人"
+          options={users.map((u) => ({ name: u.name, id: u.id }))}
+          onChange={handleSelect}
+        />
       </Form.Item>
     </Form>
   );
