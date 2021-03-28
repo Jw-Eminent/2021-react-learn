@@ -1,7 +1,7 @@
 /* @jsxImportSource @emotion/react */
 import React from "react";
 import { Input, Select, Form } from "antd";
-import { SearchPanelProps } from "./type";
+import { SearchPanelProps } from "../../types/projectList";
 
 export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
   const handleInput: (event: React.ChangeEvent<HTMLInputElement>) => void = (

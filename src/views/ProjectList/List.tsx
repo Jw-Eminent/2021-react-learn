@@ -2,8 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
-import { Project, User } from "./type";
-
+import { Project, User } from "../../types/projectList";
 interface ListProps extends TableProps<Project> {
   users: User[];
 }

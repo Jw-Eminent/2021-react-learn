@@ -2,7 +2,7 @@ import React, { useContext, ReactNode } from "react";
 import { useMount } from "utils";
 import { useAsync } from "utils";
 import { http } from "utils/http";
-import { User } from "views/ProjectList/type";
+import { User } from "types/projectList";
 import * as auth from "../authProvider";
 import { FullPageErrorFallback, FullPageLoading } from "components/lib";
 

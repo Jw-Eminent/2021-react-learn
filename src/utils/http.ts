@@ -24,7 +24,8 @@ export const http = async (
   };
 
   if (config.method.toUpperCase() === "GET") {
-    endpoing += `?${qs.stringify(data)}`;
+    const query = qs.stringify(data);
+    endpoing += query ? `?${query}` : "";
   } else {
     config.body = JSON.stringify(data || {});
   }
